@@ -25,7 +25,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         progress_widget.hpp
         clock_widget.hpp
         fonts.qrc
-        text_formatting.hpp
+
         progress_widget.cpp
         clock_widget.cpp
         progress_updater.hpp

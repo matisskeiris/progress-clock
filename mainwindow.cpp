@@ -60,8 +60,7 @@ void MainWindow::setUpCentralWidget()
 {
     auto widget = new QWidget(this);
     setCentralWidget(widget);
-    _centralWidgetLayout = new QVBoxLayout(this);
-    widget->setLayout(_centralWidgetLayout);
+    _centralWidgetLayout = new QVBoxLayout(widget);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {

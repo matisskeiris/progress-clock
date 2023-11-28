@@ -1,9 +1,11 @@
 #include "clock_widget.hpp"
-#include "text_formatting.hpp"
 
 #include <QDateTime>
+#include <QLabel>
 #include <QPainter>
+#include <QTextCursor>
 #include <QTimer>
+#include <QVBoxLayout>
 
 ClockWidget::ClockWidget(QWidget *parent)
     : QWidget(parent) {
@@ -38,6 +40,8 @@ void ClockWidget::paintEvent(QPaintEvent *) {
     QTextDocument dateTextDocument(this);
 
     clockTextDocument.setDocumentMargin(0);
+    dayOfTheWeekTextDocument.setDocumentMargin(0);
+    dateTextDocument.setDocumentMargin(0);
 
     fillClockTextDocument(clockTextDocument, currentDateTime, _fontSize);
     fillDayOfTheWeekTextDocument(dayOfTheWeekTextDocument, currentDateTime, _fontSize * 0.4);
@@ -48,6 +52,7 @@ void ClockWidget::paintEvent(QPaintEvent *) {
     int topCornerY = (size().height() - textHeight) / 2;
 
     painter.translate(topCornerX, topCornerY);
+    //painter.fillRect(QRectF(QPoint(0,0), clockTextDocument.size()), Qt::red);
     clockTextDocument.drawContents(&painter);
 
     painter.translate(0, clockTextDocument.size().height());
@@ -83,7 +88,6 @@ void ClockWidget::resizeEvent(QResizeEvent *event)
 
 void ClockWidget::fillClockTextDocument(QTextDocument &textDocument, const QDateTime& dateTime, const int textSize) {
     QTextCursor cursor(&textDocument);
-    TextFormatting::setLineHeight(cursor, textSize);
 
     QTextCharFormat format;
     format.setForeground(QColor(255, 255, 255));
@@ -98,7 +102,6 @@ void ClockWidget::fillClockTextDocument(QTextDocument &textDocument, const QDate
 
 void ClockWidget::fillDayOfTheWeekTextDocument(QTextDocument &textDocument, const QDateTime& dateTime, const int textSize) {
     QTextCursor cursor(&textDocument);
-    TextFormatting::setLineHeight(cursor, textSize, textSize * 0.4);
 
     QTextCharFormat format;
     format.setForeground(QColor(255, 255, 255));
@@ -110,7 +113,6 @@ void ClockWidget::fillDayOfTheWeekTextDocument(QTextDocument &textDocument, cons
 
 void ClockWidget::fillDateTextDocument(QTextDocument &textDocument, const QDateTime& dateTime, const int textSize) {
     QTextCursor cursor(&textDocument);
-    TextFormatting::setLineHeight(cursor, textSize, textSize * 0.4);
 
     QTextCharFormat format;
     format.setForeground(QColor(255, 255, 255));

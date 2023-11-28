@@ -7,12 +7,13 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
 
-    QFontDatabase::addApplicationFont(":/RobotoCondensed.ttf");
+    QFontDatabase::addApplicationFont(":/Lato-Bold.ttf");
+    QFontDatabase::addApplicationFont(":/Lato-Regular.ttf");
 
-    w.setFont(QFont("RobotoCondensed"));
+    a.setFont(QFont("Lato"));
     w.setMinimumSize(QSize(400, 500));
 
-    w.setStyleSheet("background-color: black;");
+    w.setStyleSheet("background-color: black; color: white;");
 
     w.show();
 

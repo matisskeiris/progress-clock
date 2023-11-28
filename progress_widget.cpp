@@ -1,5 +1,4 @@
 #include "progress_widget.hpp"
-#include "text_formatting.hpp"
 
 #include <QGraphicsOpacityEffect>
 #include <QLabel>
@@ -77,7 +76,6 @@ inline void ProgressWidget::paintProgressText(QPainter& painter, int circleDiame
 
 inline void ProgressWidget::fillPercentageTextDocument(QTextDocument &textDocument, int textSize) {
     QTextCursor cursor(&textDocument);
-    TextFormatting::setLineHeight(cursor, textSize);
 
     QTextCharFormat format;
     format.setForeground(QColor(255, 255, 255));
@@ -93,7 +91,6 @@ inline void ProgressWidget::fillPercentageTextDocument(QTextDocument &textDocume
 
 inline void ProgressWidget::fillInitializedTextDocument(QTextDocument &textDocument, int textSize) {
     QTextCursor cursor(&textDocument);
-    TextFormatting::setLineHeight(cursor, textSize);
 
     QTextCharFormat format;
     format.setForeground(QColor(255, 255, 255));

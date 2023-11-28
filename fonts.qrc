@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>RobotoCondensed.ttf</file>
+        <file>Lato-Bold.ttf</file>
+        <file>Lato-Regular.ttf</file>
     </qresource>
 </RCC>
