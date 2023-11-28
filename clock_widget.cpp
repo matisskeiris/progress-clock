@@ -51,11 +51,12 @@ void ClockWidget::paintEvent(QPaintEvent *) {
     int topCornerX = (size().width() - clockTextDocument.idealWidth()) / 2;
     int topCornerY = (size().height() - textHeight) / 2;
 
-    painter.translate(topCornerX, topCornerY);
-    //painter.fillRect(QRectF(QPoint(0,0), clockTextDocument.size()), Qt::red);
+    // Adding hack for left margin issue, don't know why QTextDocument is adding it there
+    // Checked QTextBlockFormat, QTextCharFormat, setDocumentMargin etc. ¯\_(ツ)_/¯
+    painter.translate(topCornerX - _fontSize / 20, topCornerY);
     clockTextDocument.drawContents(&painter);
 
-    painter.translate(0, clockTextDocument.size().height());
+    painter.translate(_fontSize / 20, clockTextDocument.size().height());
     dayOfTheWeekTextDocument.drawContents(&painter);
 
     painter.translate(0, dayOfTheWeekTextDocument.size().height());
@@ -73,7 +74,10 @@ void ClockWidget::resizeEvent(QResizeEvent *event)
         QFont font;
         font.setWeight(QFont::Bold);
         font.setPointSize(_fontSize);
+
         QFontMetrics metrics(font);
+
+        qDebug() << _fontSize << " " << metrics.ascent() << " " << metrics.descent();
 
         auto textWidth = metrics.horizontalAdvance("99:99");
         if (textWidth > width) {
@@ -88,6 +92,11 @@ void ClockWidget::resizeEvent(QResizeEvent *event)
 
 void ClockWidget::fillClockTextDocument(QTextDocument &textDocument, const QDateTime& dateTime, const int textSize) {
     QTextCursor cursor(&textDocument);
+
+    // Set line height to match bottom margin
+    auto blockFormat = cursor.blockFormat();
+    blockFormat.setLineHeight(textSize, QTextBlockFormat::LineHeightTypes::FixedHeight);
+    cursor.setBlockFormat(blockFormat);
 
     QTextCharFormat format;
     format.setForeground(QColor(255, 255, 255));

@@ -77,6 +77,11 @@ inline void ProgressWidget::paintProgressText(QPainter& painter, int circleDiame
 inline void ProgressWidget::fillPercentageTextDocument(QTextDocument &textDocument, int textSize) {
     QTextCursor cursor(&textDocument);
 
+    // Set line height to match bottom margin
+    auto blockFormat = cursor.blockFormat();
+    blockFormat.setLineHeight(textSize, QTextBlockFormat::LineHeightTypes::FixedHeight);
+    cursor.setBlockFormat(blockFormat);
+
     QTextCharFormat format;
     format.setForeground(QColor(255, 255, 255));
     format.setFontWeight(QFont::Bold);
